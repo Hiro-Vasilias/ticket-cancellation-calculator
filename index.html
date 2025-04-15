@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket Cancellation Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --burgundy: #800020;
+            --grey: #dddddd;
+            --black: #1a1a1a;
+            --white: #ffffff;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 480px;
+            margin: auto;
+            padding: 20px;
+            background-color: var(--grey);
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.2);
+        }
+        h2 {
+            color: var(--burgundy);
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            font-size: 16px;
+            border: 1px solid #999;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        button {
+            margin-top: 24px;
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            background-color: var(--burgundy);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: var(--white);
+            border-left: 5px solid var(--burgundy);
+            border-radius: 6px;
+        }
+        .result p {
+            margin: 6px 0;
+        }
+        #advisory {
+            color: #800020;
+            font-weight: bold;
+            margin-top: 12px;
+        }
+    </style>
+
+  <link rel="manifest" href="manifest.json">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Ticket Cancellation Calculator</h2>
+        <label>Ticket Price Sold (£) (X):</label>
+        <input type="number" id="x">
+        
+        <label>Ticket Bought Price (£) (Y):</label>
+        <input type="number" id="y">
+        
+        <label>Airline Cancellation Fees (£) (Z):</label>
+        <input type="number" id="z">
+        
+        <label>Company Standard Cancellation Fees (£) (T):</label>
+        <input type="number" id="t">
+        
+        <label>Agent Commission (£) (K):</label>
+        <input type="number" id="k">
+        
+        <label>Supplier Charge (£) (L):</label>
+        <input type="number" id="l">
+
+        <button onclick="calculate()">Calculate</button>
+
+        <div class="result" id="result" style="display: none;">
+            <p id="a"></p>
+            <p id="b"></p>
+            <p id="c"></p>
+            <p id="d"></p>
+            <p id="outcome" style="font-weight:bold;"></p>
+            <p id="advisory"></p>
+        
+        <button onclick="clearInputs()" style="background-color: #333; margin-top: 20px;">Clear</button>
+    </div>
+    </div>
+    
+    
+<script>
+    function calculate() {
+        let x = parseFloat(document.getElementById("x").value) || 0;
+        let y = parseFloat(document.getElementById("y").value) || 0;
+        let z = parseFloat(document.getElementById("z").value) || 0;
+        let t = parseFloat(document.getElementById("t").value) || 0;
+        let k = parseFloat(document.getElementById("k").value) || 0;
+        let l = parseFloat(document.getElementById("l").value) || 0;
+
+        let a = (x - y) - k;
+        let b = y - z;
+        let c = x - t;
+        let d = (b - c) - (l + k);
+
+        let outcome = "";
+        let advisoryNote = "";
+
+        if (d > a) {
+            outcome = "✅ Profit";
+        } else if (d < a) {
+            outcome = "❌ Loss";
+            let diff = (a - d).toFixed(2);
+            advisoryNote = `💡 Advisory: Increase Company Standard Cancellation Fee (T) by at least £${diff} to break even.`;
+        } else {
+            outcome = "➖ No Profit No Loss";
+        }
+
+        document.getElementById("a").innerText = `Initial Company Profit (A): £${a.toFixed(2)}`;
+        document.getElementById("b").innerText = `Company Refund (B): £${b.toFixed(2)}`;
+        document.getElementById("c").innerText = `Customer Refund (C): £${c.toFixed(2)}`;
+        document.getElementById("d").innerText = `Company New Take (D): £${d.toFixed(2)}`;
+        document.getElementById("outcome").innerText = `Outcome: ${outcome}`;
+        document.getElementById("advisory").innerText = advisoryNote;
+        document.getElementById("result").style.display = 'block';
+    }
+
+    function clearInputs() {
+        document.getElementById("x").value = "";
+        document.getElementById("y").value = "";
+        document.getElementById("z").value = "";
+        document.getElementById("t").value = "";
+        document.getElementById("k").value = "";
+        document.getElementById("l").value = "";
+
+        document.getElementById("a").innerText = "";
+        document.getElementById("b").innerText = "";
+        document.getElementById("c").innerText = "";
+        document.getElementById("d").innerText = "";
+        document.getElementById("outcome").innerText = "";
+        document.getElementById("advisory").innerText = "";
+        document.getElementById("result").style.display = 'none';
+    }
+    </script>
+
+
+</body>
+</html>
