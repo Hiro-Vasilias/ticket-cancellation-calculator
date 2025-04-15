@@ -72,34 +72,26 @@
             margin-top: 12px;
         }
     </style>
-
-  <link rel="manifest" href="manifest.json">
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js');
-    }
-  </script>
 </head>
-
 <body>
     <div class="container">
         <h2>Ticket Cancellation Calculator</h2>
-        <label>Ticket Price Sold (£) (X):</label>
+        <label>Ticket Price Sold (£):</label>
         <input type="number" id="x">
         
-        <label>Ticket Bought Price (£) (Y):</label>
+        <label>Ticket Bought Price (£):</label>
         <input type="number" id="y">
         
-        <label>Airline Cancellation Fees (£) (Z):</label>
+        <label>Airline Cancellation Fees (£):</label>
         <input type="number" id="z">
         
-        <label>Company Standard Cancellation Fees (£) (T):</label>
+        <label>Company Standard Cancellation Fees (£):</label>
         <input type="number" id="t">
         
-        <label>Agent Commission (£) (K):</label>
+        <label>Agent Commission (£):</label>
         <input type="number" id="k">
         
-        <label>Supplier Charge (£) (L):</label>
+        <label>Supplier Charge (£):</label>
         <input type="number" id="l">
 
         <button onclick="calculate()">Calculate</button>
@@ -139,15 +131,15 @@
         } else if (d < a) {
             outcome = "❌ Loss";
             let diff = (a - d).toFixed(2);
-            advisoryNote = `💡 Advisory: Increase Company Standard Cancellation Fee (T) by at least £${diff} to break even.`;
+            advisoryNote = `💡 Advisory: Increase Company Standard Cancellation Fee by at least £${diff} to break even.`;
         } else {
             outcome = "➖ No Profit No Loss";
         }
 
-        document.getElementById("a").innerText = `Initial Company Profit (A): £${a.toFixed(2)}`;
-        document.getElementById("b").innerText = `Company Refund (B): £${b.toFixed(2)}`;
-        document.getElementById("c").innerText = `Customer Refund (C): £${c.toFixed(2)}`;
-        document.getElementById("d").innerText = `Company New Take (D): £${d.toFixed(2)}`;
+        document.getElementById("a").innerText = `Initial Company Profit: £${a.toFixed(2)}`;
+        document.getElementById("b").innerText = `Company Refund: £${b.toFixed(2)}`;
+        document.getElementById("c").innerText = `Customer Refund: £${c.toFixed(2)}`;
+        document.getElementById("d").innerText = `Company New Take: £${d.toFixed(2)}`;
         document.getElementById("outcome").innerText = `Outcome: ${outcome}`;
         document.getElementById("advisory").innerText = advisoryNote;
         document.getElementById("result").style.display = 'block';
